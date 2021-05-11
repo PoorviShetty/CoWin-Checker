@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Results By {{ type }} </title>
+{% endblock head %}
+
+{% block body %}
+    {% if type=='District' %}
+        <h1 class="text-center mt-3">Centers in {{ district }}</h1>
+    {% else %}
+        <h1 class="text-center mt-3">Centers at {{ pincode }}</h1>
+    {% endif %}
+    {% if data is defined and data|length > 0 %}
+
+            <div class="container py-5">
+                <div class="row">
+                {% for centre in data %}
+                    <div class="col-12 col-lg-6 col-xl-4 mb-5">
+                        <div class="card bg-primary border-light shadow-soft  h-100">
+                            <div class="card-header p-3">
+                                <h4>{{centre['name']}}</h4>
+                                <h5>{{centre['address']}}</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th class="border-0" scope="col">Date</th>
+                                        <th class="border-0" scope="col">Available Slots</th>
+                                        <th class="border-0" scope="col">Min Age Limit</th>
+                                    </tr>
+                                    {% for session in centre['sessions'] %}
+                                    <tr>
+                                        <td>{{session['date']}}</td>
+                                        <td>{{session['available_capacity']}}</td>
+                                        <td>{{session['min_age_limit']}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+
+    {% else %}
+
+        <div class="container py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-9">
+                        <div class="card bg-primary border-light shadow-soft h-100">
+                            <h2 class="text-center py-5">No Vaccination Centres Available</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {% endif %}
+
+{% endblock body %}

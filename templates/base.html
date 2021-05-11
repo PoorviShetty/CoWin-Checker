@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/neumorphism.css') }}">
+  {% block head %}{% endblock head %}
+</head>
+
+<body>
+
+   <nav class="navbar navbar-expand-lg navbar-transparent navbar-light navbar-theme-primary mt-3">
+        <div class="container position-relative">
+            <a class="navbar-brand mr-lg-5" href="{{ url_for('index') }}">
+                <h5 class="font-weight-bold">HOME</h5>
+            </a>
+        </div>
+    </nav>
+    <hr class="m-0 p-0"/>
+  {% block body%}
+  {% endblock body %}
+
+  <script src="{{ url_for('static', filename='js/jquery-3.6.0.slim.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>

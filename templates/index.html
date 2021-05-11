@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>CoWIN Checker</title>
+{% endblock head %}
+
+{% block body %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-12">
+                <div class="card bg-primary border-light shadow-soft h-100">
+                    <div class="card-body text-center">
+                        <h5 class="font-weight-bold">For when you want to check vaccination centers' status without any OTPs</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 mb-5">
+                <div class="card bg-primary border-light shadow-soft h-100">
+                    <div class="card-body">
+                        <form class="pin_form" method="POST">
+                            {{ loc_form.hidden_tag() }}
+                            {{ wtf.form_field(pin_form.Pincode) }}
+                            {{ wtf.form_field(pin_form.Pin_Submit) }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 mb-5">
+                <div class="card bg-primary border-light shadow-soft h-100">
+                    <div class="card-body">
+                        <form class="loc_form" method="POST">
+                            {{ loc_form.hidden_tag() }}
+                            {{ wtf.form_field(loc_form.State) }}
+                            {{ wtf.form_field(loc_form.District) }}
+                            {{ wtf.form_field(loc_form.Loc_Submit) }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        var state_select = document.getElementById("State");
+        var district_select = document.getElementById("District");
+
+        state_select.onchange = function()  {
+            state = state_select.value;
+            fetch('/getdistrict/' + state).then(function(response) {
+                response.json().then(function(data) {
+                    var optionHTML = '';
+                    for (var district of data.districts) {
+                        optionHTML += '<option value="' + district[0] + '">' + district[1] + '</option>';
+                    }
+                    district_select.innerHTML = optionHTML;
+                })
+            });
+        }
+    </script>
+{% endblock body %}
